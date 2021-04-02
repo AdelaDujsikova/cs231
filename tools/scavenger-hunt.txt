@@ -1,0 +1,35 @@
+Adela Dujsikova
+
+I work on a MacBook Air
+
+1. ipconfig getifaddr en0
+curl ifconfig.me
+BONUS - en0 is wireless, en1 is ethernet
+
+2. nslookup host_name
+ping host_name
+
+3. nslookup host_IP_address
+nmap -sL host_IP_address
+nbtstat -a host_IP_address - this should work for Windows
+
+4. scp /path/to/local/file username@hostname:/path/to/remote/file (copy something from this machine to some other machine)
+scp username@hostname:/path/to/remote/file /path/to/local/file (copy something from another machine to this machine)
+
+5. sudo lsof -nP -iTCP -sTCP:LISTEN | grep port_number
+sudo lsof -n -i -P | grep ':80 (LISTEN)'
+nmap -p port_number IP_address
+nc -vzw 2 192.168.56.1 80 (you can test whether you can establish connection with the port)
+
+6. sudo lsof -nP -iTCP -sTCP:LISTEN
+sudo lsof -i -P -n | grep LISTEN
+netstat -a -n | grep 'LISTEN ' (gives fewer results, probably omits certain ports?)
+
+7. wget "web_page_address" -O page.html
+wget -m --convert-links --page-requisites --no-parent web_page_address
+curl "http://www.google.com/" >> /Users/name/desktop/temp.html
+
+8. curl -IL web_page_address
+
+9. curl -Ivs http://example.com > /dev/null : -I
+curl --verbose web_page_address (among other things, this will also show the header sent by my computer)
