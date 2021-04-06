@@ -6,8 +6,9 @@ Kitty Tyree and Adela Dujsikova
    2 129.6.15.28 10.0.2.15 TCP [SYN, ACK] Seq=0 Ack=1 Win=32768 Len=0 MSS=1460
    3 10.0.2.15 129.6.15.28 TCP [ACK] Seq=1 Ack=1 Win=64240 Len=0
 
-2. The client, which is us the users, use port 42110 for the interaction, and the server receives it at port 13. 
-   The port serves as a door between the client and the server. During the TCP handshake the two parties exchange information about what ports they are using to establish connection - a communication canal.
+2. The client, which is us the users, uses port 42110 for the interaction, and the server receives it at port 13. 
+   The port serves as a channel between the client and the server and each protocol is assigned a specific port number. During the TCP handshake the two parties exchange information about what ports they are using to establish connection - a communication canal. 
+   Both client and server need a port to make the communication two-way, in both directions. If client didn't have a port, it wouldn't be able to receive the information.
 
 3. 
    4 129.6.15.28 10.0.2.15 DAYTIME DAYTIME Response
@@ -16,28 +17,35 @@ Kitty Tyree and Adela Dujsikova
 	Type: Response
 	Daytime: 59308 21-04-04 20:10:56 50 0 0 432.0 UTC(NIST) *
 
-The first number, 59308, represents the Modified Julian Day. Then there is the date (YY-MM-DD) and time (HH:MM:SS). The number 50 stands for daylight savings flag, notifying us that we are on the daylight saving time. The first 0 stands for the leap second and the second 0 stands for the health of the time server, in this case it is fully healthy. The final parameter 432.0 is the time advance in milliseconds. UTC specifies the time zone (Coordinated Universal Time) and NIST stands for the source of the information. The message ends with an asterisk for compatibility reasons.
-   
+The first number, 59308, represents the Modified Julian Day (the number of days since midnight on November 17, 1858). 
+Then there is the date (YY-MM-DD) and time (HH:MM:SS). 
+The number 50 stands for daylight saving flag, notifying us that we are on the Daylight Saving Time. 
+The first 0 stands for the leap second (0 signifies that no leap second is imminent) and the second 0 stands for the health of the time server, in this case it is fully healthy. 
+The final parameter 432.0 is the time advance in milliseconds. 
+UTC specifies the time zone (Coordinated Universal Time) and NIST stands for the source of the information (National Institute of Standards and Technology). 
+The message ends with an asterisk for compatibility reasons, it has no special meaning.
 
-5. [SYN] denotes the synchronization packet
-6. [ACK] denotes the acknowledgment packet
-7. [FIN] denotes the finish packet
+For more information please visit: https://tf.nist.gov/general/pdf/1046.pdf
+   
+5. [SYN] denotes the synchronization packet, which is generated when a client attempts to start a TCP connection to a server
+6. [ACK] denotes the acknowledgment packet, which is communicating that the transmitted data has been received without errors
+7. [FIN] denotes the finish packet, which is sent to close a connection
 
 8. The server initiated the closing of TCP, which we know because the first [FIN] packet was sent from the server IP address.
 
 ===== HTTP =====
 
-1. We counted 35 TCP connections.
+1. We counted 2 TCP connections.
 
-2. We think packet 4 requests the homepage, since the body of the packet consists of GET index.html.
-	4 10.0.2.15 45.79.89.123 HTTP GET /index.html HTTP/1.1
+2. We think packet 7 requests the homepage, since the body of the packet consists of GET index.html.
+	7 10.0.2.15 45.79.89.123 HTTP GET /index.html HTTP/1.1
 
-3. Again, the body of the packet says GET /jeff_square_head.jpg, which suggests the request of the picture.
-	7 10.0.2.15 45.79.89.123 HTTP GET /jeff_square_head.jpg HTTP/1.1
+3. Again, the body of the 10th packet says GET /jeff_square_head.jpg, which suggests the request of the picture.
+	10 10.0.2.15 45.79.89.123 HTTP GET /jeff_square_head.jpg HTTP/1.1
 
 ===== QUESTIONS =====
 
-1. How much can you actually learn when using Wireshark? Where is the limit?
+1. How much can you actually learn when using Wireshark? What is the limit?
 2. Do you have a preferred website or source which you use to get help with Wireshark?
 3. When we ran Wireshark while looking at a website, the last 4 packets were highlighted in black instead of green. What does that mean?
 4. Also looking at the website, none of the packets were [FIN] packets. Why? (we closed the website after stopping Wireshark, so we were wondering that maybe the [FIN] packets would be sent if the closing of the website was also observed by Wireshark)
