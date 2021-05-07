@@ -1,0 +1,32 @@
+Adela Dujsikova & Ethan Li
+CS 231
+Professor Jeff Ondich
+May 7th, 2021
+
+Part 1
+Passwords cracked: 1224 (1162 single-word, 62 double-word)
+Total time: 1 h 11 m 20.943 s (0.66 s for only single-word passwords)
+Number of hashes computed: 1 606 773 751
+Passwords cracked per number of hashes computed: 7. 62 * 10-7
+Time per password cracked: 3.5 s/password
+
+Note: The data for cracking only single-word passwords looks a lot better, but our program for cracking double-word passwords is very slow. We used one program for single-word and a slightly different program for double-word passwords. I later realised that some of the passwords were cracked by both of them (e.g. the password “fatalistically” is a word on the list, but it is also a composition of the words “fatalistic” and “ally” from the list), so the actual number of unique passwords cracked is lower than reported above. 
+
+Note 2: Given enough time and processing power, we would probably be able to crack all of the passwords with our program, but we were not able to do so within the timeframe of this assignment. 
+
+---------------------------------------------------------------------------------------------
+
+Part 2
+Passwords cracked: 1133 (all single-word passwords)
+Total time: 18 m 24 s
+Number of hashes computed: 267751 * 2326 = 622,788,826 (could have been more efficient with the code by stopping the loop that hashes the same password with the same salt once a solution is found, which would probably reduce the number of hashes computed to about half of this value)
+Passwords cracked per number of hashes computed: 0.000001819 (again, could have been improved with the hashing loops)
+Time per password cracked: 0.9744 s/password (again, could be improved to about twice if hashing loops were improved.
+
+Note: We tried to crack a single salted two-word concatenated password, and it’s been running on one of our computers for 15 hours without success. Once again, our code wasn’t optimized enough to be more efficient, but even if it was it would probably be on a similar time scale as well (our code is basically doing the worst case scenario brute force)
+
+Factor by which your time per password lengthened, and why.
+Taking into account only single-word passwords to make the calculation fair: (18*60+24)/0.66 = 1672.7
+Theoretically, it should be 2326 times, because while part 1 only makes one hash for each word on the list (267751 hashes), part 2 has to create new hashes of all of those words for every password we are trying to crack (267751 * 2326). The factor is the same for double-word passwords.
+Note: This answer is assuming using brute force method.
+            
